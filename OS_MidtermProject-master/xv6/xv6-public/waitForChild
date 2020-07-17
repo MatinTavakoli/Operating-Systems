@@ -1,0 +1,30 @@
+
+#include "types.h"
+#include "stat.h"
+#include "user.h"
+
+struct timeVariables{
+  int creationTime;
+  int terminationTime;
+  int sleepingTime; 
+  int readyTime; 
+  int runningTime;
+  };
+  
+int main(void) {
+    int pid = fork();
+    if (pid == 0){
+        for (int i = 0; i < 10; ++i)
+        sleep(2);
+        exit();
+    } else if(pid > 0){
+        struct timeVariables tv;
+        waitForChild(&tv);
+        printf(1, "creationTime %d\n", tv.creationTime);
+        printf(1, "terminationTime %d\n", tv.terminationTime);
+        printf(1, "readyTime %d\n", tv.readyTime);
+        printf(1, "sleepingTime %d\n", tv.sleepingTime);
+        printf(1, "runningTime %d\n", tv.runningTime);
+        exit();
+    }
+}
